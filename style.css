@@ -17,6 +17,8 @@ nav ul {
     display: flex;
     flex-direction: row;
     list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 
 nav li {
@@ -27,6 +29,6 @@ nav li {
 nav a {
     text-decoration: none;
     color: inherit;
-    font-size: 25px;
+    font-size: 15px;
     font-weight: bold;
 }
