@@ -1,9 +1,25 @@
+/* Variables globales */
+:root {
+    --font-primary: 'Montserrat', sans-serif;
+    --color-primary: #FF6F61;
+    --color-secondary: rgb(223, 223, 223);
+    --color-white: #FFFFFF;
+    --color-border: rgb(180, 180, 180);
+    --border-radius-large: 30px;
+    --border-radius-small: 20px;
+    --nav-height: 60px;
+    --padding-main: 13px;
+    --button-size: 40px;
+    --font-size-small: 15px;
+    --font-weight-bold: bold;
+}
+
 * {
-    box-sizing: border-box; /* Appliqué à tous les éléments */
+    box-sizing: border-box;
 }
 
 body {
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-primary);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -13,12 +29,13 @@ body {
     height: 100vh;
 }
 
+/* Navigation globale */
 nav {
     position: fixed;
     top: 0;
     width: 100%;
     padding: 20px 0;
-    background-color: #FF6F61;
+    background-color: var(--color-primary);
     z-index: 10;
 }
 
@@ -33,64 +50,121 @@ nav ul {
 nav li {
     text-align: center;
     flex: 1;
-    font-size: 15px;
-    font-weight: bold;
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-bold);
 }
 
 nav a {
     text-decoration: none;
     color: inherit;
-    font-size: 15px;
-    font-weight: bold;
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-bold);
 }
 
-.main-idees,
-.main-to-dos {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 13px;
-    display: flex;
-    flex-direction: column;
-    gap: 13px;
-}
-
+/* Styles communs */
 .gray-box {
     height: 100%;
-    background-color: rgb(223, 223, 223);
-    border-radius: 30px;
-    margin-top: 60px;
+    background-color: var(--color-secondary);
+    border-radius: var(--border-radius-large);
+    margin-top: var(--nav-height);
     padding: 10px;
     padding-top: 20px;
     position: relative;
 }
 
-.to-dos-box {
-    height: initial;
-    margin-top: 0;
-    min-height: 200px;
+/* Bouton */
+#plus-button {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    border-radius: 50%;
+    height: var(--button-size);
+    width: var(--button-size);
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border);
+    font-size: var(--font-size-small);
 }
 
-#to-dos-box-one {
-    margin-top: 60px;
+/* Page idées */
+.main-idees {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: var(--padding-main);
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding-main);
 }
 
 .idee-box {
     width: 100%;
     height: 150px;
-    background-color: white;
-    border-radius: 30px;
+    background-color: var(--color-white);
+    border-radius: var(--border-radius-large);
     margin-bottom: 10px;
 }
 
-#plus-button {
-    position: absolute;
-    right: 8px;
-    top: 8px;
-    border-radius: 40px;
-    height: 40px;
-    width: 40px;
-    background-color: white;
-    border: 1px solid rgb(180, 180, 180);
-    font-size: 15px;
+/* Page to-dos */
+.main-to-dos {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: var(--padding-main);
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding-main);
+}
+
+#first-to-dos-box {
+    margin-top: 110px;
+}
+
+.to-dos-box {
+    height: initial;
+    min-height: 200px;
+    margin-top: 0;
+}
+
+.nav-days {
+    background-color: var(--color-white);
+    margin: 65px 0;
+    padding: 0;
+    z-index: 2;
+    width: 90%;
+    border-radius: var(--border-radius-small);
+    border: 1px solid black;
+    height: 50px;
+}
+
+.nav-days ul {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    height: 100%;
+}
+
+.weekday {
+    flex: 1;
+    text-align: center;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.weekday:hover {
+    background-color: var(--color-secondary);
+}
+
+.weekday.lundi {
+    border-top-left-radius: var(--border-radius-small);
+    border-bottom-left-radius: var(--border-radius-small);
+}
+
+.weekday.dimanche {
+    border-top-right-radius: var(--border-radius-small);
+    border-bottom-right-radius: var(--border-radius-small);
 }

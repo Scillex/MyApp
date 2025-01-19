@@ -3,55 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>To-dos - Hebdomadaire</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/02641f71b5.js" crossorigin="anonymous"></script>
-
 </head>
 <body>
     <nav>
         <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="idees.html">Idees</a></li>
-            <li><a href="">timetable</a></li>
-            <li>to-dos</li>
+            <li><a href="">Timetable</a></li>
+            <li>To-dos</li>
+        </ul>
+    </nav>
+    <nav class="nav-days">
+        <ul>
+            <li class="weekday lundi" data-day="lundi">L</li>
+            <li class="weekday" data-day="mardi">M</li>
+            <li class="weekday" data-day="mercredi">M</li>
+            <li class="weekday" data-day="jeudi">J</li>
+            <li class="weekday" data-day="vendredi">V</li>
+            <li class="weekday" data-day="samedi">S</li>
+            <li class="weekday dimanche" data-day="dimanche">D</li>
         </ul>
     </nav>
     <main class="main-to-dos">
-        <section class="gray-box to-dos-box" id="to-dos-box-one">
-            <h1>Apprentissage</h1>
-        </section>
-        <section class="gray-box to-dos-box">
-            <div>
-                <h2>Lundi</h2>
-                <p>Callisténie</p>
-            </div>
-            <div>
-                <h2>Mardi</h2>
-                <p>Course à pied</p>
-            </div>
-            <div>
-                <h2>Mercredi</h2>
-                <p>-</p>
-            </div>
-            <div>
-                <h2>Jeudi</h2>
-                <p>Callisténie ou Sport en salle</p>
-            </div>
-            <div>
-                <h2>Vendredi</h2>
-                <p>-</p>
-            </div>
-            <div>
-                <h2>Samedi</h2>
-                <p>Callisténie</p>
-            </div>
-            <div>
-                <h2>Dimanche</h2>
-                <p>Course à pied + (Callisténie)</p>
-            </div>
-        </section>
+        <section class="gray-box to-dos-box" id="first-to-dos-box"></section>
+        <section class="gray-box to-dos-box"></section>
+        <section class="gray-box to-dos-box"></section>
+        <section class="gray-box to-dos-box"></section>
     </main>
     <script src="app.js"></script>
 </body>
