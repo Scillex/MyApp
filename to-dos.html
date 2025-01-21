@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To-dos - Hebdomadaire</title>
+    <title>To-dos</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/02641f71b5.js" crossorigin="anonymous"></script>
@@ -13,8 +13,9 @@
         <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="idees.html">Idees</a></li>
-            <li><a href="">Timetable</a></li>
-            <li>To-dos</li>
+            <li><a href="to-dos.html">to-dos</a></li>
+            <li><a href="">Chat</a></li>
+            <li><a href="">Learn</a></li>
         </ul>
     </nav>
     <nav class="nav-days">
@@ -29,10 +30,35 @@
         </ul>
     </nav>
     <main class="main-to-dos">
-        <section class="gray-box to-dos-box" id="first-to-dos-box"></section>
-        <section class="gray-box to-dos-box"></section>
-        <section class="gray-box to-dos-box"></section>
-        <section class="gray-box to-dos-box"></section>
+        <section class="gray-box to-dos-box" id="first-to-dos-box">
+            <h3>A faire</h3>
+            <div class="white-box">
+                <ul>
+                    <li>
+                        <label class="container">
+                            <input type="checkbox">
+                            <svg viewBox="0 0 64 64">
+                                <path d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 16" pathLength="575.0541381835938" class="path"></path>
+                            </svg>
+                        </label>
+                        <p>Hello my friend</p>
+                    </li>
+                </ul>
+                <div class="ajout"><button id="add-button"><i class="fa-solid fa-plus"></i></button></div>
+            </div>
+        </section>
+        <section class="gray-box to-dos-box">
+            <h3>Sport</h3>
+            <div class="white-box"></div>
+        </section>
+        <section class="gray-box to-dos-box">
+            <h3>Routine</h3>
+            <div class="white-box"></div>
+        </section>
+        <section class="gray-box to-dos-box">
+            <h3>Apprentissage</h3>
+            <div class="white-box"></div>
+        </section>
     </main>
     <script src="app.js"></script>
 </body>

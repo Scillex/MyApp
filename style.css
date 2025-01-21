@@ -63,13 +63,16 @@ nav a {
 
 /* Styles communs */
 .gray-box {
-    height: 100%;
     background-color: var(--color-secondary);
     border-radius: var(--border-radius-large);
     margin-top: var(--nav-height);
     padding: 10px;
-    padding-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
     position: relative;
+    
 }
 
 /* Bouton */
@@ -167,4 +170,86 @@ nav a {
 .weekday.dimanche {
     border-top-right-radius: var(--border-radius-small);
     border-bottom-right-radius: var(--border-radius-small);
+}
+
+.gray-box h3 {
+    margin: 5px;
+    padding: 0;
+}
+
+.white-box {
+    display: table;
+    width: 100%;
+    min-height: 150px;
+    padding: 10px;
+    background-color: white;
+    border-radius: var(--border-radius-small);
+}
+
+.white-box ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.white-box li {
+    display: table-row;
+    width: 100%;
+}
+
+.white-box li label,
+.white-box li p {
+    display: table-cell;
+    vertical-align: middle;
+    padding: 10px;
+}
+
+.container {
+    cursor: pointer;
+}
+
+.container input {
+    display: none;
+}
+
+.container svg {
+    overflow: visible;
+    width: 20px;
+    height: 20px;
+}
+
+.path {
+    fill: none;
+    stroke: rgb(0, 0, 0);
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: stroke-dasharray 0.5s ease, stroke-dashoffset 0.5s ease;
+    stroke-dasharray: 240 9999999;
+    stroke-dashoffset: 0;
+}
+
+.container input:checked ~ svg .path {
+    stroke-dasharray: 70.5096664428711 9999999;
+    stroke-dashoffset: -262.2723388671875;
+}
+
+.ajout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 20px;
+}
+
+#add-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--border-radius-small);
+    height: 25px;
+    width: 80%;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(211, 211, 211);
+    box-shadow: 4px 4px 15px rgb(239, 239, 239);
 }
