@@ -26,7 +26,6 @@ body {
     flex-direction: column;
     margin: 0;
     padding: 0;
-    height: 100vh;
 }
 
 /* Navigation globale */
@@ -86,6 +85,7 @@ nav a {
     background-color: var(--color-white);
     border: 1px solid var(--color-border);
     font-size: var(--font-size-small);
+    cursor: pointer;
 }
 
 /* Page idées */
@@ -123,7 +123,7 @@ nav a {
 }
 
 .to-dos-box {
-    height: initial;
+    height: auto;
     min-height: 200px;
     margin-top: 0;
 }
@@ -156,10 +156,16 @@ nav a {
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 }
 
 .weekday:hover {
     background-color: var(--color-secondary);
+}
+
+.weekday.active {
+    background-color: var(--color-primary);
+    color: var(--color-secondary);
 }
 
 .weekday.lundi {
@@ -198,10 +204,24 @@ nav a {
 }
 
 .white-box li label,
-.white-box li p {
+.white-box li p,
+.trash-button {
     display: table-cell;
     vertical-align: middle;
     padding: 10px;
+}
+
+.white-box li p {
+    width: 100%;
+}
+
+.trash-button {
+    background-color: inherit;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: right;
+    width: 1%;
 }
 
 .container {
@@ -242,7 +262,7 @@ nav a {
     height: 20px;
 }
 
-#add-button {
+.add-button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -252,4 +272,5 @@ nav a {
     background-color: rgb(255, 255, 255);
     border: 1px solid rgb(211, 211, 211);
     box-shadow: 4px 4px 15px rgb(239, 239, 239);
+    cursor: pointer;
 }
