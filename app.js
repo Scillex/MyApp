@@ -1,143 +1,149 @@
 // === PARTIE SPÉCIFIQUE À "IDEES" ===
-
 const buttonIdee = document.getElementById("plus-button");
-const gray_box = document.querySelector(".gray-box");
+const grayBox = document.querySelector(".gray-box");
 
-// Vérifier si les éléments existent avant d'ajouter des écouteurs
-if (buttonIdee && gray_box) {
-    buttonIdee.addEventListener("click", function() {
-        // Créer un nouveau div
+if (buttonIdee && grayBox) {
+    buttonIdee.addEventListener("click", () => {
         const newDiv = document.createElement("div");
-
-        // Ajouter une classe à ce nouveau div
         newDiv.classList.add("idee-box");
-
-        // Ajouter le nouveau div au conteneur
-        gray_box.appendChild(newDiv);
+        grayBox.appendChild(newDiv);
     });
 }
 
-// === GESTION DES TO-DOS ===
+// === VARIABLES GLOBALES ===
+let currentDay = new Date().toLocaleDateString('fr-FR', { weekday: 'long' }).toLowerCase();
 
-// Fonction pour sauvegarder les tâches dans localStorage
-function saveTasks(sectionId, tasks) {
-    localStorage.setItem(sectionId, JSON.stringify(tasks));
+// === GESTION DES JOURS DE LA SEMAINE ===
+function setActiveDay(dayElement) {
+    document.querySelectorAll('.weekday').forEach(el => el.classList.remove('active'));
+    dayElement.classList.add('active');
+    currentDay = dayElement.dataset.day;
 }
 
-// Fonction pour charger les tâches depuis localStorage
-function loadTasks(sectionId) {
-    const tasks = localStorage.getItem(sectionId);
+function loadDay(day) {
+    document.querySelectorAll(".gray-box").forEach((section) => {
+        const sectionId = section.querySelector("h3").textContent.trim();
+        const whiteBoxUl = section.querySelector(".white-box ul");
+        whiteBoxUl.innerHTML = '';
+        loadTasks(day, sectionId).forEach(task => {
+            whiteBoxUl.appendChild(createTaskElement(task));
+        });
+    });
+}
+
+// === FONCTIONS DE GESTION DES TÂCHES ===
+function saveTasks(day, sectionId, tasks) {
+    localStorage.setItem(`${day}-${sectionId}`, JSON.stringify(tasks));
+}
+
+function loadTasks(day, sectionId) {
+    const tasks = localStorage.getItem(`${day}-${sectionId}`);
     return tasks ? JSON.parse(tasks) : [];
 }
 
-// Charger les tâches au démarrage
-document.addEventListener("DOMContentLoaded", function() {
-    const sections = document.querySelectorAll(".gray-box.to-dos-box");
-    sections.forEach(section => {
-        const sectionId = section.querySelector("h3").textContent.trim(); // Utilise le titre comme ID
-        const tasks = loadTasks(sectionId);
-        const whiteBoxUl = section.querySelector(".white-box ul");
-
-        if (whiteBoxUl) {
-            tasks.forEach(task => {
-                const newLi = createTaskElement(task);
-                whiteBoxUl.appendChild(newLi);
-            });
-        }
-    });
-});
-
-// Fonction pour créer un élément de tâche
-function createTaskElement(taskText) {
+function createTaskElement(taskData) { // Modifié pour accepter un objet
     const newLi = document.createElement("li");
     newLi.innerHTML = `
         <label class="container">
-            <input type="checkbox">
+            <input type="checkbox" ${taskData.checked ? 'checked' : ''}>
             <svg viewBox="0 0 64 64">
-                <path 
-                    d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 16"
-                    pathLength="575.0541381835938" 
-                    class="path">
-                </path>
+                <path d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 16" 
+                      class="path ${taskData.checked ? 'checked' : ''}"></path>
             </svg>
         </label>
-        <p>${taskText}</p>
+        <p>${taskData.text}</p>
         <button class="trash-button"><i class="fa-solid fa-trash-can"></i></button>
     `;
 
-    // Ajouter un écouteur d'événement pour la poubelle
-    const trashButton = newLi.querySelector(".trash-button");
-    trashButton.addEventListener("click", function() {
-        newLi.remove();
-        updateTasksInStorage(newLi.closest(".gray-box"));
+    const checkbox = newLi.querySelector('input[type="checkbox"]');
+    checkbox.addEventListener('change', () => {
+        const path = newLi.querySelector('.path');
+        path.classList.toggle('checked', checkbox.checked);
+        const parentSection = newLi.closest(".gray-box");
+        if (parentSection) updateTasksInStorage(parentSection);
     });
 
-    // Ajouter un écouteur d'événement pour modifier le texte
+    const trashButton = newLi.querySelector(".trash-button");
+    trashButton.addEventListener("click", () => {
+        const parentSection = newLi.closest(".gray-box");
+        newLi.remove();
+        if (parentSection) updateTasksInStorage(parentSection);
+    });
+
     const taskTextElement = newLi.querySelector("p");
-    taskTextElement.addEventListener("dblclick", function() {
-        const currentText = taskTextElement.textContent;
+    taskTextElement.addEventListener("dblclick", () => {
         const input = document.createElement("input");
         input.type = "text";
-        input.value = currentText;
+        input.value = taskTextElement.textContent;
 
         taskTextElement.replaceWith(input);
         input.focus();
 
-        input.addEventListener("keydown", function(event) {
-            if (event.key === "Enter") {
-                saveText();
-            }
-        });
-
-        input.addEventListener("blur", saveText);
-
-        function saveText() {
-            const newText = input.value.trim();
-            taskTextElement.textContent = newText || "Nouvelle tâche ajoutée !";
+        const saveText = () => {
+            taskTextElement.textContent = input.value.trim() || "Nouvelle tâche ajoutée !";
             input.replaceWith(taskTextElement);
-            updateTasksInStorage(newLi.closest(".gray-box"));
-        }
+            const parentSection = newLi.closest(".gray-box");
+            if (parentSection) updateTasksInStorage(parentSection);
+        };
+
+        input.addEventListener("keydown", (e) => e.key === "Enter" && saveText());
+        input.addEventListener("blur", saveText);
     });
 
     return newLi;
 }
 
-// Fonction pour mettre à jour les tâches dans localStorage
 function updateTasksInStorage(section) {
     const sectionId = section.querySelector("h3").textContent.trim();
-    const tasks = [];
-    section.querySelectorAll(".white-box ul li p").forEach(p => {
-        tasks.push(p.textContent);
-    });
-    saveTasks(sectionId, tasks);
+    const tasks = Array.from(section.querySelectorAll(".white-box ul li"), (li) => ({
+        text: li.querySelector('p').textContent,
+        checked: li.querySelector('input').checked
+    }));
+    saveTasks(currentDay, sectionId, tasks);
 }
 
-// Sélectionner TOUS les boutons "Ajouter"
-const addButtons = document.querySelectorAll(".add-button");
-
-// Pour chaque bouton "Ajouter" trouvé
-addButtons.forEach(button => {
-    button.addEventListener("click", function() {
-        const parentSection = this.closest(".gray-box");
-        const whiteBoxUl = parentSection.querySelector(".white-box ul");
-
-        if (whiteBoxUl) {
-            const newLi = createTaskElement("Nouvelle tâche ajoutée !");
-            whiteBoxUl.appendChild(newLi);
-            updateTasksInStorage(parentSection);
-        } else {
-            console.warn("Aucune liste (<ul>) trouvée dans cette section. Ajoutez-en une dans le HTML.");
-        }
+// === INITIALISATION ===
+document.addEventListener("DOMContentLoaded", () => {
+    // Trouver l'élément correspondant au jour actuel
+    const todayElement = document.querySelector(`[data-day="${currentDay}"]`);
+    
+    // Activer le jour actuel
+    if (todayElement) {
+        setActiveDay(todayElement);
+        loadDay(currentDay);
+    } else {
+        // Fallback au lundi si non trouvé
+        const defaultDay = document.querySelector('[data-day="lundi"]');
+        setActiveDay(defaultDay);
+        loadDay('lundi');
+    }
+    
+    // Gestion des clics sur les jours
+    document.querySelectorAll('.weekday').forEach(dayElement => {
+        dayElement.addEventListener('click', () => {
+            // Sauvegarder les tâches du jour actuel
+            document.querySelectorAll(".gray-box").forEach(section => {
+                updateTasksInStorage(section);
+            });
+            
+            // Charger le nouveau jour
+            setActiveDay(dayElement);
+            loadDay(currentDay);
+        });
     });
 });
 
-// Tableau pour les weekdays
-let tasksByDay = {
-    lundi: { "A faire": [], "Sport": [], "Routine": [], "Apprentissage": [] },
-    mardi: { "A faire": [], "Sport": [], "Routine": [], "Apprentissage": [] },
-    mercredi: { "A faire": [], "Sport": [], "Routine": [], "Apprentissage": [] },
-    jeudi: { "A faire": [], "Sport": [], "Routine": [], "Apprentissage": [] },
-    vendredi: { "A faire": [], "Sport": [], "Routine": [], "Apprentissage": [] },
-    samedi: { "A faire": [], "Sport": [], "Routine": [], "Apprentissage": [] },
-    dimanche: { "A faire": [], "Sport": [], "Routine": [], "Apprentissage": [] }
-};
+
+// === GESTION DES BOUTONS "AJOUTER" === (modification pour l'état initial)
+document.querySelectorAll(".add-button").forEach((button) => {
+    button.addEventListener("click", () => {
+        const parentSection = button.closest(".gray-box");
+        const whiteBoxUl = parentSection.querySelector(".white-box ul");
+        const newTask = createTaskElement({
+            text: "Nouvelle tâche ajoutée !",
+            checked: false
+        });
+        whiteBoxUl.appendChild(newTask);
+        updateTasksInStorage(parentSection);
+    });
+});
