@@ -199,8 +199,10 @@ nav a {
 }
 
 .white-box li {
-    display: table-row;
+    display: flex; /* Remplacer table-row par flex */
+    align-items: center;
     width: 100%;
+    padding: 5px 0;
 }
 
 .white-box li label,
@@ -278,4 +280,35 @@ nav a {
     border: 1px solid rgb(211, 211, 211);
     box-shadow: 4px 4px 15px rgb(239, 239, 239);
     cursor: pointer;
+}
+
+.sub-tasks {
+    display: table-row;
+}
+
+.sub-tasks-cell {
+    display: table-cell;
+    padding: 5px 10px;
+    /* Une bordure ou une marge pour visualiser l'indentation */
+    border-left: 2px solid var(--color-border);
+}
+
+/* Style pour chaque sous-tâche */
+.sub-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 20px; /* Indentation supplémentaire */
+    margin-bottom: 5px;
+    /* Vous pouvez ajouter un fond ou d'autres styles si nécessaire */
+    background-color: #f9f9f9;
+    padding: 5px;
+    border-radius: var(--border-radius-small);
+}
+
+/* Ajustement des éléments internes dans la sous-tâche */
+.sub-item label,
+.sub-item p,
+.sub-item .trash-button {
+    padding: 5px;
 }
