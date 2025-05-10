@@ -1,19 +1,22 @@
-// === PARTIE SPÉCIFIQUE À "IDEES" ===
-const buttonIdee = document.getElementById("plus-button");
+// PROJECT
+const buttonProject = document.getElementById("plus-button");
 const grayBox = document.querySelector(".gray-box");
 
-if (buttonIdee && grayBox) {
-    buttonIdee.addEventListener("click", () => {
+if (buttonProject && grayBox) {
+    buttonProject.addEventListener("click", () => {
         const newDiv = document.createElement("div");
-        newDiv.classList.add("idee-box");
+        newDiv.classList.add("project-box");
         grayBox.appendChild(newDiv);
     });
 }
 
-// === VARIABLES GLOBALES ===
+
+
+
+// TO-DOS
 let currentDay = new Date().toLocaleDateString('fr-FR', { weekday: 'long' }).toLowerCase();
 
-// === GESTION DES JOURS DE LA SEMAINE ===
+// GESTION DES JOURS DE LA SEMAINE
 function setActiveDay(dayElement) {
     document.querySelectorAll('.weekday').forEach(el => el.classList.remove('active'));
     dayElement.classList.add('active');
@@ -246,7 +249,7 @@ document.querySelectorAll(".add-button").forEach((button) => {
         const parentSection = button.closest(".gray-box");
         const whiteBoxUl = parentSection.querySelector(".white-box ul");
         const newTask = createTaskElement({
-            text: "Nouvelle tâche ajoutée !",
+            text: "Aïe aïe aïe...",
             checked: false
         });
         whiteBoxUl.appendChild(newTask);
